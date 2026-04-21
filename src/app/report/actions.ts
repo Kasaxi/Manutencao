@@ -3,7 +3,7 @@
 import { createClient } from '@/utils/supabase/server'
 import { getAITriage } from '../actions/ai-triage'
 
-export async function createPublicProtocol(formData: FormData) {
+export async function createPublicProtocol(prevState: any, formData: FormData) {
   const supabase = await createClient()
   
   const propertyId = formData.get('propertyId') as string

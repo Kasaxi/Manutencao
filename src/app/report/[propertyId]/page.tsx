@@ -1,6 +1,6 @@
 import { createClient } from '@/utils/supabase/server'
-import { createPublicProtocol } from '../actions'
-import { AlertTriangle, Send } from 'lucide-react'
+import { ReportForm } from '@/components/ReportForm'
+import { AlertTriangle } from 'lucide-react'
 
 export default async function PublicReportPage({ params }: { params: { propertyId: string } }) {
   const supabase = await createClient()
@@ -13,11 +13,11 @@ export default async function PublicReportPage({ params }: { params: { propertyI
 
   if (!property) {
     return (
-      <div className="min-h-screen bg-[#0A0A0B] flex items-center justify-center p-8">
+      <div className="min-h-screen bg-[#0A0A0B] flex items-center justify-center p-8 text-zinc-100 font-mono">
         <div className="max-w-md w-full border-2 border-red-900 p-8 bg-red-950/10 text-center">
            <AlertTriangle size={48} className="mx-auto text-red-500 mb-6" />
-           <h1 className="text-2xl font-black text-white uppercase tracking-tighter mb-4">IMÓVEL_NÃO_IDENTIFICADO</h1>
-           <p className="text-zinc-500 font-mono text-sm uppercase">O link utilizado é inválido ou o imóvel não está cadastrado no sistema.</p>
+           <h1 className="text-2xl font-black uppercase tracking-tighter mb-4">IMÓVEL_NÃO_IDENTIFICADO</h1>
+           <p className="text-zinc-500 text-sm uppercase">O link utilizado é inválido ou o imóvel não está cadastrado no sistema.</p>
         </div>
       </div>
     )
@@ -38,64 +38,7 @@ export default async function PublicReportPage({ params }: { params: { propertyI
            </p>
         </header>
 
-        <form action={createPublicProtocol} className="space-y-8">
-          <input type="hidden" name="propertyId" value={params.propertyId} />
-          
-          <div className="space-y-6">
-            <div className="group">
-              <label className="block text-[10px] font-black tracking-widest text-zinc-500 uppercase mb-3 px-1">Seu Nome Completo</label>
-              <input 
-                required
-                name="tenantName"
-                placeholder="Ex: João da Silva"
-                className="w-full bg-[#111113] border-2 border-zinc-800 p-4 font-bold text-white placeholder:text-zinc-700 focus:border-[#FF4500] outline-none transition-all"
-              />
-            </div>
-
-            <div className="group">
-              <label className="block text-[10px] font-black tracking-widest text-zinc-500 uppercase mb-3 px-1">Telefone para Contato</label>
-              <input 
-                required
-                name="tenantPhone"
-                placeholder="(00) 00000-0000"
-                className="w-full bg-[#111113] border-2 border-zinc-800 p-4 font-bold text-white placeholder:text-zinc-700 focus:border-[#FF4500] outline-none transition-all"
-              />
-            </div>
-
-            <div className="group">
-              <label className="block text-[10px] font-black tracking-widest text-zinc-500 uppercase mb-3 px-1">O que aconteceu? (Curto)</label>
-              <input 
-                required
-                name="title"
-                placeholder="Ex: Vazamento sob a pia da cozinha"
-                className="w-full bg-[#111113] border-2 border-zinc-800 p-4 font-bold text-white placeholder:text-zinc-700 focus:border-[#FF4500] outline-none transition-all"
-              />
-            </div>
-
-            <div className="group">
-              <label className="block text-[10px] font-black tracking-widest text-zinc-500 uppercase mb-3 px-1">Descrição Detalhada</label>
-              <textarea 
-                required
-                name="description"
-                rows={5}
-                placeholder="Descreva o problema com o máximo de detalhes possível..."
-                className="w-full bg-[#111113] border-2 border-zinc-800 p-4 font-bold text-white placeholder:text-zinc-700 focus:border-[#FF4500] outline-none transition-all resize-none"
-              ></textarea>
-            </div>
-          </div>
-
-          <button 
-            type="submit"
-            className="w-full bg-zinc-100 text-zinc-950 p-6 font-black uppercase tracking-widest hover:bg-[#FF4500] hover:text-white transition-all flex items-center justify-center gap-4 group"
-          >
-            ENVIAR_RELATÓRIO <Send size={20} className="group-hover:translate-x-2 transition-transform" />
-          </button>
-
-          <p className="text-[10px] text-zinc-600 font-bold uppercase tracking-widest text-center">
-            Ao enviar, um protocolo será gerado e nossa equipe entrará em contato.
-          </p>
-        </form>
+        <ReportForm propertyId={params.propertyId} />
       </div>
-    </div>
   )
 }
