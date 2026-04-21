@@ -54,7 +54,14 @@ export async function addMaterialToOrder(
     requiresApproval = true
   }
 
-  const updatePayload: any = {
+  interface ServiceOrderUpdate {
+    estimated_total: number;
+    requires_approval: boolean;
+    updated_at: string;
+    status?: string;
+  }
+
+  const updatePayload: ServiceOrderUpdate = {
     estimated_total: newTotal,
     requires_approval: requiresApproval,
     updated_at: new Date().toISOString()

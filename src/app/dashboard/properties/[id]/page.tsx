@@ -2,13 +2,20 @@ import { createClient } from '@/utils/supabase/server'
 import Link from 'next/link'
 import { ArrowLeft, Building, WrenchIcon, Archive, LayoutGrid } from 'lucide-react'
 
+import { AssetsSection } from '@/components/AssetsSection'
+import { PreventiveSection } from '@/components/PreventiveSection'
+
 export default async function PropertyDetailPage({
-  params
+  params,
+  searchParams
 }: {
   params: { id: string }
+  searchParams: { tab?: string }
 }) {
   const supabase = await createClient()
   
+  const tab = searchParams?.tab || 'identificacao'
+
   const { data: prop, error } = await supabase
     .from('properties')
     .select('*')
@@ -53,79 +60,110 @@ export default async function PropertyDetailPage({
       </div>
 
       {/* Tabs / Sub-navigation brutalist style */}
-      <div className="flex flex-wrap gap-6 mb-12 font-mono border-b border-zinc-800/50 pb-0">
-         <button className="text-xs font-bold uppercase tracking-[0.2em] text-[#FF4500] border-b-2 border-[#FF4500] pb-4 flex items-center gap-2 px-2 -mb-[1px]">
+      <div className="flex flex-wrap gap-10 mb-12 font-mono border-b border-zinc-800/50 pb-0">
+         <Link 
+            href={`?tab=identificacao`}
+            className={`text-xs font-bold uppercase tracking-[0.2em] pb-4 flex items-center gap-2 px-2 -mb-[1px] transition-all ${
+               tab === 'identificacao' ? 'text-[#FF4500] border-b-2 border-[#FF4500]' : 'text-zinc-600 hover:text-zinc-400'
+            }`}
+         >
             <Building size={14} /> DADOS_IDENTIFICAÇÃO
-         </button>
-         <button className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-600 hover:text-zinc-300 pb-4 flex items-center gap-2 px-2 -mb-[1px] opacity-50 cursor-not-allowed">
-            <WrenchIcon size={14} /> PROTOCOLOS
-         </button>
-         <button className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-600 hover:text-zinc-300 pb-4 flex items-center gap-2 px-2 -mb-[1px] opacity-50 cursor-not-allowed">
-            <Archive size={14} /> HISTÓRICO
-         </button>
+         </Link>
+         <Link 
+            href={`?tab=ativos`}
+            className={`text-xs font-bold uppercase tracking-[0.2em] pb-4 flex items-center gap-2 px-2 -mb-[1px] transition-all ${
+               tab === 'ativos' ? 'text-[#FF4500] border-b-2 border-[#FF4500]' : 'text-zinc-600 hover:text-zinc-400'
+            }`}
+         >
+            <Archive size={14} /> ATIVOS
+         </Link>
+         <Link 
+            href={`?tab=preventiva`}
+            className={`text-xs font-bold uppercase tracking-[0.2em] pb-4 flex items-center gap-2 px-2 -mb-[1px] transition-all ${
+               tab === 'preventiva' ? 'text-[#FF4500] border-b-2 border-[#FF4500]' : 'text-zinc-600 hover:text-zinc-400'
+            }`}
+         >
+            <WrenchIcon size={14} /> PREVENTIVA
+         </Link>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 font-mono">
-         <section className="space-y-8 bg-[#111113] p-8 border border-zinc-800 relative">
-            <div className="absolute top-0 right-0 w-8 h-8 bg-zinc-800 flex items-center justify-center text-[10px] text-zinc-500 font-bold">01</div>
-            <h2 className="text-xs tracking-[0.2em] text-zinc-500 uppercase font-bold border-l-2 border-[#FF4500] pl-4">Topologia</h2>
-            
-            <div className="grid grid-cols-2 gap-8">
-               <div>
-                  <div className="text-[9px] text-zinc-600 uppercase tracking-[0.2em] mb-2 font-bold">Categoria</div>
-                  <div className="text-sm text-zinc-100 uppercase tracking-widest">{prop.property_type === 'house' ? 'Casa' : prop.property_type === 'apartment' ? 'Apartamento' : prop.property_type === 'commercial' ? 'Comercial' : 'Terreno'}</div>
-               </div>
-               <div>
-                  <div className="text-[9px] text-zinc-600 uppercase tracking-[0.2em] mb-2 font-bold">Área</div>
-                  <div className="text-sm text-zinc-100 uppercase tracking-widest">{prop.area_m2 ? `${prop.area_m2} m²` : 'N/D'}</div>
-               </div>
-               <div>
-                  <div className="text-[9px] text-zinc-600 uppercase tracking-[0.2em] mb-2 font-bold">Cômodos</div>
-                  <div className="text-sm text-zinc-100 uppercase tracking-widest">{prop.rooms || 'N/D'}</div>
-               </div>
-            </div>
+      {tab === 'identificacao' && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 font-mono">
+           <section className="space-y-8 bg-[#111113] p-8 border border-zinc-800 relative">
+              <div className="absolute top-0 right-0 w-8 h-8 bg-zinc-800 flex items-center justify-center text-[10px] text-zinc-500 font-bold">01</div>
+              <h2 className="text-xs tracking-[0.2em] text-zinc-500 uppercase font-bold border-l-2 border-[#FF4500] pl-4">Topologia</h2>
+              
+              <div className="grid grid-cols-2 gap-8">
+                 <div>
+                    <div className="text-[9px] text-zinc-600 uppercase tracking-[0.2em] mb-2 font-bold">Categoria</div>
+                    <div className="text-sm text-zinc-100 uppercase tracking-widest">{prop.property_type === 'house' ? 'Casa' : prop.property_type === 'apartment' ? 'Apartamento' : prop.property_type === 'commercial' ? 'Comercial' : 'Terreno'}</div>
+                 </div>
+                 <div>
+                    <div className="text-[9px] text-zinc-600 uppercase tracking-[0.2em] mb-2 font-bold">Área</div>
+                    <div className="text-sm text-zinc-100 uppercase tracking-widest">{prop.area_m2 ? `${prop.area_m2} m²` : 'N/D'}</div>
+                 </div>
+                 <div>
+                    <div className="text-[9px] text-zinc-600 uppercase tracking-[0.2em] mb-2 font-bold">Cômodos</div>
+                    <div className="text-sm text-zinc-100 uppercase tracking-widest">{prop.rooms || 'N/D'}</div>
+                 </div>
+              </div>
 
-            <div className="pt-6 border-t border-zinc-800/50">
-               <div className="text-[9px] text-zinc-600 uppercase tracking-[0.2em] mb-3 font-bold">Endereço</div>
-               <div className="text-sm text-zinc-100 tracking-wider">
-                  {prop.address_street}, {prop.address_number}
-                  {prop.address_complement && ` - ${prop.address_complement}`}
-               </div>
-               <div className="text-sm text-zinc-400 mt-2 tracking-wider">
-                  {prop.neighborhood}
-               </div>
-               <div className="text-sm text-zinc-400 mt-2 tracking-wider">
-                  {prop.city} / {prop.state}
-               </div>
-               <div className="text-sm text-zinc-500 mt-2 tracking-widest">
-                  CEP: {prop.zipcode}
-               </div>
-            </div>
-         </section>
+              <div className="pt-6 border-t border-zinc-800/50">
+                 <div className="text-[9px] text-zinc-600 uppercase tracking-[0.2em] mb-3 font-bold">Endereço</div>
+                 <div className="text-sm text-zinc-100 tracking-wider">
+                    {prop.address_street}, {prop.address_number}
+                    {prop.address_complement && ` - ${prop.address_complement}`}
+                 </div>
+                 <div className="text-sm text-zinc-400 mt-2 tracking-wider">
+                    {prop.neighborhood}
+                 </div>
+                 <div className="text-sm text-zinc-400 mt-2 tracking-wider">
+                    {prop.city} / {prop.state}
+                 </div>
+                 <div className="text-sm text-zinc-500 mt-2 tracking-widest">
+                    CEP: {prop.zipcode}
+                 </div>
+              </div>
+           </section>
 
-         <section className="space-y-8 bg-[#111113] p-8 border border-zinc-800 relative">
-            <div className="absolute top-0 right-0 w-8 h-8 bg-zinc-800 flex items-center justify-center text-[10px] text-zinc-500 font-bold">02</div>
-            <h2 className="text-xs tracking-[0.2em] text-zinc-500 uppercase font-bold border-l-2 border-[#FF4500] pl-4">Inquilino / Operador</h2>
-            
-            <div className="grid grid-cols-1 gap-6">
-               <div>
-                  <div className="text-[9px] text-zinc-600 uppercase tracking-[0.2em] mb-2 font-bold">Inquilino</div>
-                  <div className="text-sm text-zinc-100 uppercase tracking-widest">{prop.tenant_name || 'NENHUM_CADASTRADO'}</div>
-               </div>
-               <div>
-                  <div className="text-[9px] text-zinc-600 uppercase tracking-[0.2em] mb-2 font-bold">Contato</div>
-                  <div className="text-sm text-zinc-100 uppercase tracking-widest">{prop.tenant_contact || 'N/D'}</div>
-               </div>
-            </div>
+           <section className="space-y-8 bg-[#111113] p-8 border border-zinc-800 relative">
+              <div className="absolute top-0 right-0 w-8 h-8 bg-zinc-800 flex items-center justify-center text-[10px] text-zinc-500 font-bold">02</div>
+              <h2 className="text-xs tracking-[0.2em] text-zinc-500 uppercase font-bold border-l-2 border-[#FF4500] pl-4">Inquilino / Operador</h2>
+              
+              <div className="grid grid-cols-1 gap-6">
+                 <div>
+                    <div className="text-[9px] text-zinc-600 uppercase tracking-[0.2em] mb-2 font-bold">Inquilino</div>
+                    <div className="text-sm text-zinc-100 uppercase tracking-widest">{prop.tenant_name || 'NENHUM_CADASTRADO'}</div>
+                 </div>
+                 <div>
+                    <div className="text-[9px] text-zinc-600 uppercase tracking-[0.2em] mb-2 font-bold">Contato</div>
+                    <div className="text-sm text-zinc-100 uppercase tracking-widest">{prop.tenant_contact || 'N/D'}</div>
+                 </div>
+              </div>
 
-            <div className="pt-6 border-t border-zinc-800/50">
-               <div className="text-[9px] text-zinc-600 uppercase tracking-[0.2em] mb-3 font-bold">Notas de Observação</div>
-               <div className="text-sm text-zinc-400 bg-[#0A0A0B] p-6 border border-zinc-800/50 min-h-[120px] whitespace-pre-wrap leading-relaxed">
-                  {prop.notes || 'NENHUM DADO DISPONÍVEL NESTA SEÇÃO'}
-               </div>
-            </div>
-         </section>
-      </div>
+              <div className="pt-6 border-t border-zinc-800/50">
+                 <div className="text-[9px] text-zinc-600 uppercase tracking-[0.2em] mb-3 font-bold">Notas de Observação</div>
+                 <div className="text-sm text-zinc-400 bg-[#0A0A0B] p-6 border border-zinc-800/50 min-h-[120px] whitespace-pre-wrap leading-relaxed">
+                    {prop.notes || 'NENHUM DADO DISPONÍVEL NESTA SEÇÃO'}
+                 </div>
+              </div>
+           </section>
+        </div>
+      )}
+
+      {tab === 'ativos' && (
+        <div className="flex-1">
+          {/* @ts-ignore */}
+          <AssetsSection propertyId={params.id} />
+        </div>
+      )}
+
+      {tab === 'preventiva' && (
+        <div className="flex-1">
+          {/* @ts-ignore */}
+          <PreventiveSection propertyId={params.id} />
+        </div>
+      )}
     </div>
   )
 }

@@ -1,15 +1,54 @@
--- ENUMS
-CREATE TYPE user_role AS ENUM ('admin', 'operator');
-CREATE TYPE property_type AS ENUM ('house', 'apartment', 'commercial', 'land');
-CREATE TYPE property_status AS ENUM ('rented', 'own_use', 'vacant');
-CREATE TYPE ticket_category AS ENUM ('eletrica','hidraulica','alvenaria','pintura','serralheria','ar_cond','jardim','limpeza','outros');
-CREATE TYPE ticket_severity AS ENUM ('critical', 'high', 'medium', 'low');
-CREATE TYPE ticket_status AS ENUM ('open', 'analyzing', 'quote_pending', 'approved', 'in_progress', 'completed', 'validated', 'cancelled');
-CREATE TYPE ticket_origin AS ENUM ('tenant', 'inspection', 'preventive', 'emergency');
-CREATE TYPE attachment_type AS ENUM ('before', 'after', 'invoice', 'document');
+-- ENUMS check
+DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'user_role') THEN
+        CREATE TYPE user_role AS ENUM ('admin', 'operator');
+    END IF;
+END $$;
+
+DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'property_type') THEN
+        CREATE TYPE property_type AS ENUM ('house', 'apartment', 'commercial', 'land');
+    END IF;
+END $$;
+
+DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'property_status') THEN
+        CREATE TYPE property_status AS ENUM ('rented', 'own_use', 'vacant');
+    END IF;
+END $$;
+
+DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'ticket_category') THEN
+        CREATE TYPE ticket_category AS ENUM ('eletrica','hidraulica','alvenaria','pintura','serralheria','ar_cond','jardim','limpeza','outros');
+    END IF;
+END $$;
+
+DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'ticket_severity') THEN
+        CREATE TYPE ticket_severity AS ENUM ('critical', 'high', 'medium', 'low');
+    END IF;
+END $$;
+
+DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'ticket_status') THEN
+        CREATE TYPE ticket_status AS ENUM ('open', 'analyzing', 'quote_pending', 'approved', 'in_progress', 'completed', 'validated', 'cancelled');
+    END IF;
+END $$;
+
+DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'ticket_origin') THEN
+        CREATE TYPE ticket_origin AS ENUM ('tenant', 'inspection', 'preventive', 'emergency');
+    END IF;
+END $$;
+
+DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'attachment_type') THEN
+        CREATE TYPE attachment_type AS ENUM ('before', 'after', 'invoice', 'document');
+    END IF;
+END $$;
 
 -- USUÁRIOS
-CREATE TABLE profiles (
+CREATE TABLE IF NOT EXISTS profiles (
   id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
   full_name TEXT,
   role user_role DEFAULT 'operator',
@@ -19,7 +58,7 @@ CREATE TABLE profiles (
 );
 
 -- IMÓVEIS
-CREATE TABLE properties (
+CREATE TABLE IF NOT EXISTS properties (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   owner_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
   nickname TEXT,
@@ -43,7 +82,7 @@ CREATE TABLE properties (
 );
 
 -- ATIVOS DO IMÓVEL
-CREATE TABLE property_assets (
+CREATE TABLE IF NOT EXISTS property_assets (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   property_id UUID REFERENCES properties(id) ON DELETE CASCADE,
   name TEXT,
@@ -57,7 +96,7 @@ CREATE TABLE property_assets (
 );
 
 -- CHAMADOS / ORDENS DE SERVIÇO
-CREATE TABLE service_orders (
+CREATE TABLE IF NOT EXISTS service_orders (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   code TEXT UNIQUE,
   property_id UUID REFERENCES properties(id) ON DELETE CASCADE,
@@ -85,7 +124,7 @@ CREATE TABLE service_orders (
 );
 
 -- CATÁLOGO DE MATERIAIS
-CREATE TABLE materials_catalog (
+CREATE TABLE IF NOT EXISTS materials_catalog (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT,
   category TEXT,
@@ -96,7 +135,7 @@ CREATE TABLE materials_catalog (
 );
 
 -- MATERIAIS DO CHAMADO
-CREATE TABLE order_materials (
+CREATE TABLE IF NOT EXISTS order_materials (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   service_order_id UUID REFERENCES service_orders(id) ON DELETE CASCADE,
   material_id UUID REFERENCES materials_catalog(id) ON DELETE SET NULL,
@@ -111,7 +150,7 @@ CREATE TABLE order_materials (
 );
 
 -- ANEXOS / FOTOS
-CREATE TABLE attachments (
+CREATE TABLE IF NOT EXISTS attachments (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   service_order_id UUID REFERENCES service_orders(id) ON DELETE CASCADE,
   type attachment_type,
@@ -121,7 +160,7 @@ CREATE TABLE attachments (
 );
 
 -- COMENTÁRIOS
-CREATE TABLE order_comments (
+CREATE TABLE IF NOT EXISTS order_comments (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   service_order_id UUID REFERENCES service_orders(id) ON DELETE CASCADE,
   author_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
@@ -130,7 +169,7 @@ CREATE TABLE order_comments (
 );
 
 -- MANUTENÇÃO PREVENTIVA
-CREATE TABLE preventive_templates (
+CREATE TABLE IF NOT EXISTS preventive_templates (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   property_id UUID REFERENCES properties(id) ON DELETE CASCADE,
   asset_id UUID REFERENCES property_assets(id) ON DELETE CASCADE,
@@ -142,7 +181,7 @@ CREATE TABLE preventive_templates (
 );
 
 -- NOTIFICAÇÕES
-CREATE TABLE notifications (
+CREATE TABLE IF NOT EXISTS notifications (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
   type TEXT,
@@ -152,7 +191,7 @@ CREATE TABLE notifications (
 );
 
 -- CONFIGURAÇÕES
-CREATE TABLE settings (
+CREATE TABLE IF NOT EXISTS settings (
   owner_id UUID PRIMARY KEY REFERENCES profiles(id) ON DELETE CASCADE,
   approval_threshold NUMERIC DEFAULT 500,
   default_sla_critical_hours INT DEFAULT 4,

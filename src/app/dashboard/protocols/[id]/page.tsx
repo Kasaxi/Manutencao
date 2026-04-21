@@ -1,6 +1,6 @@
 import { createClient } from '@/utils/supabase/server'
 import Link from 'next/link'
-import { ArrowLeft, Clock, ShieldAlert, CheckCircle2 } from 'lucide-react'
+import { ArrowLeft, Clock, ShieldAlert } from 'lucide-react'
 import MaterialsSection from './materials-section'
 
 export default async function ProtocolDetailPage({

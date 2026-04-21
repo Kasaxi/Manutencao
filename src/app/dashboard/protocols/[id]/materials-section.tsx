@@ -1,9 +1,16 @@
 'use client'
 
 import { useState } from 'react'
-import { Plus, Trash2, CheckCircle, ShieldAlert } from 'lucide-react'
-import { addMaterialToOrder, approveBudget, executeOrder } from '@/app/actions/materials'
+import { Plus, ShieldAlert } from 'lucide-react'
+import { addMaterialToOrder, approveBudget } from '@/app/actions/materials'
 import { useRouter } from 'next/navigation'
+
+interface Material {
+  id: string;
+  name: string;
+  quantity: number;
+  estimated_unit_price: number;
+}
 
 export default function MaterialsSection({ 
     orderId, 
@@ -14,7 +21,7 @@ export default function MaterialsSection({
     isAdmin 
 }: { 
     orderId: string, 
-    initialMaterials: any[], 
+    initialMaterials: Material[], 
     estimatedTotal: number,
     status: string,
     requiresApproval: boolean,

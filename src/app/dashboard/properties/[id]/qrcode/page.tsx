@@ -1,8 +1,7 @@
 import { createClient } from '@/utils/supabase/server'
 import { headers } from 'next/headers'
 import Link from 'next/link'
-import { QR_CODE_API_URL } from '@/lib/constants' // I'll create this or just use string
-import { Printer, ArrowLeft, Download } from 'lucide-react'
+import { Printer, ArrowLeft } from 'lucide-react'
 
 export default async function QRCodePage({ params }: { params: { id: string } }) {
   const supabase = await createClient()

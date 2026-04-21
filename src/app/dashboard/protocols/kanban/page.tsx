@@ -1,6 +1,6 @@
 import { createClient } from '@/utils/supabase/server'
 import Link from 'next/link'
-import { LayoutGrid, AlertCircle, Clock, CheckCircle2, MoreHorizontal } from 'lucide-react'
+import { AlertCircle, Clock, CheckCircle2 } from 'lucide-react'
 
 export default async function KanbanPage() {
   const supabase = await createClient()

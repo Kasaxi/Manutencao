@@ -1,7 +1,6 @@
 'use server'
 
 import { createClient } from '@/utils/supabase/server'
-import { redirect } from 'next/navigation'
 import { getAITriage } from '../actions/ai-triage'
 
 export async function createPublicProtocol(formData: FormData) {
@@ -34,7 +33,7 @@ export async function createPublicProtocol(formData: FormData) {
   // AI Triage
   const triage = await getAITriage(description)
 
-  const { data: order, error } = await supabase
+  const { error } = await supabase
     .from('service_orders')
     .insert({
       property_id: propertyId,

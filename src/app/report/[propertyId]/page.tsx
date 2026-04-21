@@ -1,6 +1,6 @@
 import { createClient } from '@/utils/supabase/server'
 import { createPublicProtocol } from '../actions'
-import { AlertTriangle, Send, CheckCircle2 } from 'lucide-react'
+import { AlertTriangle, Send } from 'lucide-react'
 
 export default async function PublicReportPage({ params }: { params: { propertyId: string } }) {
   const supabase = await createClient()
