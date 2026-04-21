@@ -1,3 +1,6 @@
+import Link from 'next/link'
+import { Plus } from 'lucide-react'
+
 export default function DashboardOverview() {
   return (
     <div className="flex-1 p-8 md:p-12 h-full flex flex-col relative">
@@ -10,6 +13,12 @@ export default function DashboardOverview() {
                Métricas operacionais em tempo real
             </p>
          </div>
+         <Link 
+           href="/dashboard/protocols/new"
+           className="bg-[#FF4500] text-black px-6 py-3 text-[10px] font-black uppercase tracking-[0.2em] hover:bg-white transition-colors flex items-center gap-2 shrink-0"
+         >
+           <Plus size={16} /> NOVA_OS
+         </Link>
       </div>
       
       {/* brutalist grid */}

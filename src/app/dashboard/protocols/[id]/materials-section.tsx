@@ -29,7 +29,7 @@ export default function MaterialsSection({
 }) {
     const [name, setName] = useState('')
     const [quantity, setQuantity] = useState(1)
-    const [price, setPrice] = useState(0)
+    const [price, setPrice] = useState('')
     const [isSubmitting, setIsSubmitting] = useState(false)
     const router = useRouter()
 
@@ -40,7 +40,7 @@ export default function MaterialsSection({
         const res = await addMaterialToOrder(orderId, {
             name,
             quantity,
-            estimated_unit_price: price
+            estimated_unit_price: Number(price) || 0
         })
 
         if (!res.success) {
@@ -48,7 +48,7 @@ export default function MaterialsSection({
         } else {
             setName('')
             setQuantity(1)
-            setPrice(0)
+            setPrice('')
             router.refresh()
         }
 
@@ -118,7 +118,7 @@ export default function MaterialsSection({
                     </div>
                     <div className="w-32 space-y-2">
                         <label className="text-[10px] uppercase tracking-widest text-zinc-500 font-bold">Valor (R$)</label>
-                        <input required value={price} onChange={e=>setPrice(Number(e.target.value))} type="number" min="0" step="0.01" className="w-full bg-transparent border-b border-zinc-700 py-2 text-zinc-100 font-mono text-sm focus:outline-none focus:border-[#FF4500]" placeholder="0.00" />
+                        <input required value={price} onChange={e=>setPrice(e.target.value)} type="number" min="0" step="0.01" className="w-full bg-transparent border-b border-zinc-700 py-2 text-zinc-100 font-mono text-sm focus:outline-none focus:border-[#FF4500]" placeholder="0.00" />
                     </div>
                     <button disabled={isSubmitting} type="submit" className="bg-zinc-800 hover:bg-[#FF4500] text-zinc-100 px-6 py-2 transition-colors font-bold uppercase tracking-widest text-xs h-10 disabled:opacity-50">
                         <Plus size={16} />

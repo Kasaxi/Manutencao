@@ -1,6 +1,7 @@
 import { createProperty } from './actions'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import { AddressFields } from '@/components/AddressFields'
 
 export default function NewPropertyPage({
   searchParams,
@@ -55,34 +56,7 @@ export default function NewPropertyPage({
          <section>
             <div className="text-xs tracking-widest uppercase text-[#FF4500] font-bold mb-6 border-b border-[#FF4500]/30 pb-2">02. Endereço</div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-               <div className="flex flex-col space-y-2 md:col-span-2">
-                  <label className="text-[10px] uppercase tracking-wider text-zinc-500">Logradouro / Rua</label>
-                  <input name="address_street" className="bg-transparent border-b border-zinc-700 py-2 focus:outline-none focus:border-[#FF4500] transition-colors text-zinc-100" />
-               </div>
-               <div className="flex flex-col space-y-2">
-                  <label className="text-[10px] uppercase tracking-wider text-zinc-500">Número</label>
-                  <input name="address_number" className="bg-transparent border-b border-zinc-700 py-2 focus:outline-none focus:border-[#FF4500] transition-colors text-zinc-100" />
-               </div>
-               <div className="flex flex-col space-y-2">
-                  <label className="text-[10px] uppercase tracking-wider text-zinc-500">Complemento</label>
-                  <input name="address_complement" className="bg-transparent border-b border-zinc-700 py-2 focus:outline-none focus:border-[#FF4500] transition-colors text-zinc-100" />
-               </div>
-               <div className="flex flex-col space-y-2">
-                  <label className="text-[10px] uppercase tracking-wider text-zinc-500">Bairro</label>
-                  <input name="neighborhood" className="bg-transparent border-b border-zinc-700 py-2 focus:outline-none focus:border-[#FF4500] transition-colors text-zinc-100" />
-               </div>
-               <div className="flex flex-col space-y-2">
-                  <label className="text-[10px] uppercase tracking-wider text-zinc-500">Cidade</label>
-                  <input name="city" className="bg-transparent border-b border-zinc-700 py-2 focus:outline-none focus:border-[#FF4500] transition-colors text-zinc-100" />
-               </div>
-               <div className="flex flex-col space-y-2">
-                  <label className="text-[10px] uppercase tracking-wider text-zinc-500">Estado / UF</label>
-                  <input name="state" className="bg-transparent border-b border-zinc-700 py-2 focus:outline-none focus:border-[#FF4500] transition-colors text-zinc-100" />
-               </div>
-               <div className="flex flex-col space-y-2 md:col-span-2">
-                  <label className="text-[10px] uppercase tracking-wider text-zinc-500">CEP</label>
-                  <input name="zipcode" className="bg-transparent border-b border-zinc-700 py-2 focus:outline-none focus:border-[#FF4500] transition-colors text-zinc-100" />
-               </div>
+               <AddressFields />
             </div>
          </section>
 
@@ -101,9 +75,12 @@ export default function NewPropertyPage({
                <div className="flex flex-col space-y-2">
                   <label className="text-[10px] uppercase tracking-wider text-zinc-500">Status Atual *</label>
                   <select name="status" required className="bg-transparent border-b border-zinc-700 py-2 focus:outline-none focus:border-[#FF4500] transition-colors text-zinc-100 appearance-none">
-                     <option className="bg-[#0A0A0B]" value="vacant">Vago</option>
-                     <option className="bg-[#0A0A0B]" value="rented">Alugado</option>
-                     <option className="bg-[#0A0A0B]" value="own_use">Uso Próprio</option>
+                     <option className="bg-[#0A0A0B]" value="disponivel">Disponível</option>
+                     <option className="bg-[#0A0A0B]" value="vendido">Vendido</option>
+                     <option className="bg-[#0A0A0B]" value="ocupado">Ocupado</option>
+                     <option className="bg-[#0A0A0B]" value="indisponivel">Indisponível</option>
+                     <option className="bg-[#0A0A0B]" value="alugado">Alugado</option>
+                     <option className="bg-[#0A0A0B]" value="agio">Ágio</option>
                   </select>
                </div>
             </div>

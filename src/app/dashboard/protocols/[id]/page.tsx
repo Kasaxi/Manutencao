@@ -2,6 +2,7 @@ import { createClient } from '@/utils/supabase/server'
 import Link from 'next/link'
 import { ArrowLeft, Clock, ShieldAlert } from 'lucide-react'
 import MaterialsSection from './materials-section'
+import ExecutionSection from './execution-section'
 
 export default async function ProtocolDetailPage({
   params
@@ -99,23 +100,12 @@ export default async function ProtocolDetailPage({
                </div>
             </section>
 
-            {/* Workflow Control - Simplificado */}
-            <section className="bg-[#111113] p-8 border border-zinc-800 relative">
-               <h2 className="text-xs tracking-[0.2em] text-zinc-500 uppercase font-bold border-l-2 border-[#FF4500] pl-4 mb-6">Execução</h2>
-               <div className="flex gap-4 items-center">
-                  <div className="flex-1 p-4 border border-zinc-800/50 bg-[#0A0A0B]">
-                     <div className="text-[10px] text-zinc-600 uppercase tracking-widest mb-1">Operador Atribuído</div>
-                     <div className="text-sm text-zinc-100 uppercase font-bold">{order.profiles?.full_name || 'NÃO_ATRIBUÍDO'}</div>
-                  </div>
-                  {(order.status === 'open' || order.status === 'approved') && (
-                     <form>
-                        <button disabled={order.requires_approval && order.status !== 'approved'} className="bg-zinc-100 text-zinc-950 px-6 py-4 font-bold text-xs uppercase tracking-widest hover:bg-[#FF4500] hover:text-white transition-colors disabled:opacity-50 disabled:bg-zinc-800 disabled:text-zinc-500">
-                           {order.status === 'approved' ? 'Iniciar Execução' : 'Assumir OS'}
-                        </button>
-                     </form>
-                  )}
-               </div>
-            </section>
+            {/* Workflow Control */}
+            <ExecutionSection 
+               orderId={order.id}
+               currentStatus={order.status}
+               currentOperator={order.assigned_operator || null}
+            />
 
             <MaterialsSection 
                 orderId={order.id}
