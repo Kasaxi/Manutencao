@@ -40,5 +40,6 @@ export default async function PublicReportPage({ params }: { params: { propertyI
 
         <ReportForm propertyId={params.propertyId} />
       </div>
+    </div>
   )
 }

@@ -2,13 +2,14 @@
 
 import { useFormState, useFormStatus } from 'react-dom'
 import { createPublicProtocol } from '@/app/report/actions'
+import type { ReportActionState } from '@/app/report/actions'
 import { Send, CheckCircle2, AlertTriangle, ArrowRight } from 'lucide-react'
 
 interface ReportFormProps {
   propertyId: string;
 }
 
-const initialState = {
+const initialState: ReportActionState = {
   success: false,
   error: '',
   code: ''

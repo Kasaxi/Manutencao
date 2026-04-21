@@ -3,7 +3,16 @@
 import { createClient } from '@/utils/supabase/server'
 import { getAITriage } from '../actions/ai-triage'
 
-export async function createPublicProtocol(prevState: any, formData: FormData) {
+export type ReportActionState = {
+  success: boolean;
+  error: string;
+  code: string;
+}
+
+export async function createPublicProtocol(
+  prevState: ReportActionState,
+  formData: FormData
+): Promise<ReportActionState> {
   const supabase = await createClient()
   
   const propertyId = formData.get('propertyId') as string
@@ -13,7 +22,7 @@ export async function createPublicProtocol(prevState: any, formData: FormData) {
   const description = formData.get('description') as string
 
   if (!propertyId || !title || !description) {
-    return { error: 'Campos obrigatórios ausentes.' }
+    return { success: false, error: 'Campos obrigatórios ausentes.', code: '' }
   }
 
   // Verify property exists
@@ -24,7 +33,7 @@ export async function createPublicProtocol(prevState: any, formData: FormData) {
     .single()
 
   if (propError || !property) {
-    return { error: 'Imóvel não encontrado.' }
+    return { success: false, error: 'Imóvel não encontrado.', code: '' }
   }
 
   // Generate a code (simple)
@@ -55,8 +64,8 @@ export async function createPublicProtocol(prevState: any, formData: FormData) {
 
   if (error) {
     console.error('Error creating public protocol:', error)
-    return { error: 'Falha ao registrar chamado.' }
+    return { success: false, error: 'Falha ao registrar chamado.', code: '' }
   }
 
-  return { success: true, code }
+  return { success: true, error: '', code }
 }
