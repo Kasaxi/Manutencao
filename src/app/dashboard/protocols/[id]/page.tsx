@@ -109,6 +109,7 @@ export default async function ProtocolDetailPage({
 
             <MaterialsSection 
                 orderId={order.id}
+                orderTitle={order.title}
                 initialMaterials={materials || []}
                 estimatedTotal={Number(order.estimated_total)}
                 status={order.status}

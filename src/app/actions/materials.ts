@@ -86,6 +86,45 @@ export async function addMaterialToOrder(
   return { success: true }
 }
 
+export async function removeMaterial(service_order_id: string, material_id: string) {
+  const supabase = await createClient()
+
+  const { data: user, error: authError } = await supabase.auth.getUser()
+  if (authError || !user.user) {
+    return { success: false, error: 'Não autorizado' }
+  }
+
+  const { error: deleteError } = await supabase
+    .from('order_materials')
+    .delete()
+    .eq('id', material_id)
+    .eq('service_order_id', service_order_id)
+
+  if (deleteError) {
+    return { success: false, error: 'Erro ao remover material' }
+  }
+
+  // Recalculate total
+  const { data: materials } = await supabase
+    .from('order_materials')
+    .select('quantity, estimated_unit_price')
+    .eq('service_order_id', service_order_id)
+
+  const newTotal = (materials || []).reduce((acc, curr) => acc + (Number(curr.quantity) * Number(curr.estimated_unit_price)), 0)
+
+  await supabase
+    .from('service_orders')
+    .update({
+      estimated_total: newTotal,
+      requires_approval: newTotal > 500,
+      updated_at: new Date().toISOString()
+    })
+    .eq('id', service_order_id)
+
+  revalidatePath(`/dashboard/protocols/${service_order_id}`)
+  return { success: true }
+}
+
 export async function approveBudget(service_order_id: string) {
   const supabase = await createClient()
 
