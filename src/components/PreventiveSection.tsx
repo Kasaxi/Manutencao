@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { WrenchIcon, Plus, Trash2, Calendar, LayoutGrid, CheckCircle2, Play } from 'lucide-react'
+import { useState, useEffect, useCallback } from 'react'
+import { WrenchIcon, Plus, Trash2, Calendar, LayoutGrid, Play } from 'lucide-react'
 import { createPreventiveTemplate, deletePreventiveTemplate, processPreventives } from '@/app/actions/preventive'
 import { createClient } from '@/utils/supabase/client'
 import { format, parseISO } from 'date-fns'
@@ -28,11 +28,7 @@ export function PreventiveSection({ propertyId }: { propertyId: string }) {
   const [isProcessing, setIsProcessing] = useState(false)
   const supabase = createClient()
 
-  useEffect(() => {
-    fetchData()
-  }, [propertyId])
-
-  async function fetchData() {
+  const fetchData = useCallback(async () => {
     const { data: templData } = await supabase
       .from('preventive_templates')
       .select('*, property_assets(name)')
@@ -47,7 +43,11 @@ export function PreventiveSection({ propertyId }: { propertyId: string }) {
     setTemplates(templData || [])
     setAssets(assetData || [])
     setLoading(false)
-  }
+  }, [propertyId, supabase])
+
+  useEffect(() => {
+    fetchData()
+  }, [fetchData])
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()

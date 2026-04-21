@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Archive, Plus, Trash2, Tag, Calendar, FileText, Camera } from 'lucide-react'
 import { createAsset, deleteAsset } from '@/app/actions/assets'
 import { createClient } from '@/utils/supabase/client'
@@ -21,11 +21,7 @@ export function AssetsSection({ propertyId }: { propertyId: string }) {
   const [isAdding, setIsAdding] = useState(false)
   const supabase = createClient()
 
-  useEffect(() => {
-    fetchAssets()
-  }, [propertyId])
-
-  async function fetchAssets() {
+  const fetchAssets = useCallback(async () => {
     const { data } = await supabase
       .from('property_assets')
       .select('*')
@@ -34,7 +30,11 @@ export function AssetsSection({ propertyId }: { propertyId: string }) {
     
     setAssets(data || [])
     setLoading(false)
-  }
+  }, [propertyId, supabase])
+
+  useEffect(() => {
+    fetchAssets()
+  }, [fetchAssets])
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()

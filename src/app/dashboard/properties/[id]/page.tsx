@@ -153,14 +153,12 @@ export default async function PropertyDetailPage({
 
       {tab === 'ativos' && (
         <div className="flex-1">
-          {/* @ts-ignore */}
           <AssetsSection propertyId={params.id} />
         </div>
       )}
 
       {tab === 'preventiva' && (
         <div className="flex-1">
-          {/* @ts-ignore */}
           <PreventiveSection propertyId={params.id} />
         </div>
       )}

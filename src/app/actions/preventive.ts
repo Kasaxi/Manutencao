@@ -2,7 +2,7 @@
 
 import { createClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
-import { addMonths, format, isBefore, parseISO } from 'date-fns'
+import { addMonths, format, parseISO } from 'date-fns'
 
 export async function createPreventiveTemplate(formData: FormData) {
   const supabase = await createClient()
