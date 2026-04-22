@@ -92,4 +92,30 @@
   html {
     @apply font-sans;
   }
+
+  /* Custom Scrollbar for Brutalist HUD */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0A0A0B;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #27272a;
+    border-radius: 0px;
+    border: 1px solid #18181b;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #3f3f46;
+  }
+
+  /* Firefox support */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #27272a #0A0A0B;
+  }
 }
