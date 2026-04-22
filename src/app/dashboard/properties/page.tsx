@@ -55,16 +55,16 @@ export default async function PropertiesPage() {
                   {properties.map((prop) => (
                      <tr key={prop.id} className="border-b border-zinc-800/50 hover:bg-[#111113] transition-colors group">
                         <td className="py-4 px-4">
-                           <div className="font-bold text-zinc-100 mb-1">{prop.nickname}</div>
-                           <div className="text-xs text-zinc-600 truncate max-w-sm">
+                           <div className="font-bold text-zinc-100 text-base mb-1">{prop.nickname}</div>
+                           <div className="text-sm text-zinc-600 truncate max-w-sm">
                               {prop.address_street}, {prop.number} - {prop.city}/{prop.state}
                            </div>
                         </td>
-                        <td className="py-4 px-4 uppercase text-xs text-zinc-400">
+                        <td className="py-4 px-4 uppercase text-sm text-zinc-400">
                            {prop.property_type === 'house' ? 'Casa' : prop.property_type === 'apartment' ? 'Apartamento' : prop.property_type === 'commercial' ? 'Comercial' : 'Terreno'}
                         </td>
                         <td className="py-4 px-4">
-                           <span className={`inline-block px-2 py-1 text-[10px] uppercase tracking-wider border ${
+                           <span className={`inline-block px-2.5 py-1 text-xs uppercase tracking-wider border ${
                               prop.status === 'rented' ? 'border-emerald-900 text-emerald-500 bg-emerald-950/30' :
                               prop.status === 'vacant' ? 'border-amber-900 text-amber-500 bg-amber-950/30' :
                               'border-blue-900 text-blue-500 bg-blue-950/30'
@@ -75,7 +75,7 @@ export default async function PropertiesPage() {
                         <td className="py-4 px-4 text-right">
                            <Link 
                               href={`/dashboard/properties/${prop.id}`}
-                              className="text-xs tracking-widest uppercase text-zinc-500 hover:text-[#FF4500] group-hover:opacity-100 opacity-50 transition-all font-bold"
+                              className="text-sm tracking-widest uppercase text-zinc-500 hover:text-[#FF4500] group-hover:opacity-100 opacity-50 transition-all font-bold"
                            >
                               [INSPECIONAR]
                            </Link>

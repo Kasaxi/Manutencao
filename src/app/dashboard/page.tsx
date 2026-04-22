@@ -111,7 +111,7 @@ export default async function DashboardOverview() {
             <div className="absolute top-0 right-0 w-16 h-16 bg-[#FF4500] opacity-5 rounded-bl-full group-hover:scale-150 transition-transform duration-500"></div>
             <div className="flex items-center gap-3 mb-3">
                <Building2 size={14} className="text-zinc-600" />
-               <h3 className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500">Imóveis</h3>
+               <h3 className="text-xs font-bold tracking-[0.2em] uppercase text-zinc-500">Imóveis</h3>
             </div>
             <p className="text-4xl font-black text-zinc-100">{totalProperties ?? 0}</p>
          </div>
@@ -119,7 +119,7 @@ export default async function DashboardOverview() {
             <div className="absolute top-0 right-0 w-16 h-16 bg-blue-500 opacity-5 rounded-bl-full group-hover:scale-150 transition-transform duration-500"></div>
             <div className="flex items-center gap-3 mb-3">
                <Wrench size={14} className="text-zinc-600" />
-               <h3 className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500">OS Abertas</h3>
+               <h3 className="text-xs font-bold tracking-[0.2em] uppercase text-zinc-500">OS Abertas</h3>
             </div>
             <p className="text-4xl font-black text-zinc-100">{openProtocols ?? 0}</p>
          </div>
@@ -127,7 +127,7 @@ export default async function DashboardOverview() {
             <div className="absolute top-0 right-0 w-16 h-16 bg-amber-500 opacity-5 rounded-bl-full group-hover:scale-150 transition-transform duration-500"></div>
             <div className="flex items-center gap-3 mb-3">
                <Clock size={14} className="text-zinc-600" />
-               <h3 className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500">Em Execução</h3>
+               <h3 className="text-xs font-bold tracking-[0.2em] uppercase text-zinc-500">Em Execução</h3>
             </div>
             <p className="text-4xl font-black text-amber-500">{inProgressCount ?? 0}</p>
          </div>
@@ -135,7 +135,7 @@ export default async function DashboardOverview() {
             <div className="absolute top-0 right-0 w-16 h-16 bg-red-500 opacity-5 rounded-bl-full group-hover:scale-150 transition-transform duration-500"></div>
             <div className="flex items-center gap-3 mb-3">
                <AlertTriangle size={14} className="text-zinc-600" />
-               <h3 className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500">Alertas Críticos</h3>
+               <h3 className="text-xs font-bold tracking-[0.2em] uppercase text-zinc-500">Alertas Críticos</h3>
             </div>
             <p className={`text-4xl font-black ${(criticalAlerts ?? 0) > 0 ? 'text-red-500' : 'text-zinc-100'}`}>{criticalAlerts ?? 0}</p>
          </div>
@@ -168,24 +168,24 @@ export default async function DashboardOverview() {
                         {/* Main info */}
                         <div className="flex-1 min-w-0">
                            <div className="flex items-center gap-2 mb-0.5">
-                              <span className="text-[9px] font-mono text-zinc-600 uppercase tracking-widest">
+                              <span className="text-[11px] font-mono text-zinc-600 uppercase tracking-widest">
                                  #{order.code || order.id.slice(0, 8)}
                               </span>
-                              <span className={`text-[9px] font-bold uppercase tracking-widest px-1.5 py-0.5 border ${statusColor[order.status] || 'text-zinc-500 border-zinc-800'}`}>
+                              <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 border ${statusColor[order.status] || 'text-zinc-500 border-zinc-800'}`}>
                                  {statusLabel[order.status] || order.status}
                               </span>
                            </div>
-                           <h3 className="text-sm text-zinc-200 font-bold uppercase tracking-tight truncate group-hover:text-white">
+                           <h3 className="text-base text-zinc-100 font-bold uppercase tracking-tight truncate group-hover:text-white">
                               {order.title}
                            </h3>
                         </div>
 
                         {/* Property + Operator */}
                         <div className="text-right shrink-0 hidden md:block">
-                           <div className="text-[10px] text-zinc-500 font-bold uppercase tracking-tighter">
+                           <div className="text-xs text-zinc-500 font-bold uppercase tracking-tighter">
                               {Array.isArray(order.properties) ? order.properties[0]?.nickname : order.properties?.nickname}
                            </div>
-                           <div className="text-[9px] text-zinc-600 font-mono">
+                           <div className="text-[11px] text-zinc-600 font-mono">
                               {order.assigned_operator || '—'}
                            </div>
                         </div>
@@ -228,12 +228,12 @@ export default async function DashboardOverview() {
                            className="flex items-center justify-between p-3 border border-zinc-800 hover:border-[#FF4500]/30 transition-colors group"
                         >
                            <div className="min-w-0">
-                              <div className="text-sm text-zinc-200 font-bold uppercase tracking-tight truncate group-hover:text-white">
+                              <div className="text-base text-zinc-100 font-bold uppercase tracking-tight truncate group-hover:text-white">
                                  {prop.nickname || 'Sem nome'}
                               </div>
-                              <div className="text-[10px] text-zinc-600 font-mono">{prop.city || '—'}</div>
+                              <div className="text-xs text-zinc-600 font-mono">{prop.city || '—'}</div>
                            </div>
-                           <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-500 px-2 py-0.5 border border-zinc-800 shrink-0">
+                           <span className="text-xs font-bold uppercase tracking-widest text-zinc-500 px-2.5 py-1 border border-zinc-800 shrink-0">
                               {(prop.status && propertyStatusLabel[prop.status]) || prop.status || '—'}
                            </span>
                         </Link>
@@ -252,21 +252,21 @@ export default async function DashboardOverview() {
                <h2 className="text-[10px] font-black tracking-[0.2em] uppercase text-zinc-500 mb-4">Resumo Rápido</h2>
                <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                     <span className="text-xs text-zinc-500 font-mono">Concluídas</span>
+                     <span className="text-sm text-zinc-500 font-mono">Concluídas</span>
                      <span className="text-sm font-black text-emerald-500 flex items-center gap-1.5">
                         <CheckCircle2 size={12} /> {completedCount ?? 0}
                      </span>
                   </div>
                   <div className="flex justify-between items-center">
-                     <span className="text-xs text-zinc-500 font-mono">Em Execução</span>
+                     <span className="text-sm text-zinc-500 font-mono">Em Execução</span>
                      <span className="text-sm font-black text-amber-500">{inProgressCount ?? 0}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                     <span className="text-xs text-zinc-500 font-mono">Aguardando</span>
+                     <span className="text-sm text-zinc-500 font-mono">Aguardando</span>
                      <span className="text-sm font-black text-zinc-300">{openProtocols ?? 0}</span>
                   </div>
                   <div className="border-t border-zinc-800 pt-3 mt-3 flex justify-between items-center">
-                     <span className="text-xs text-zinc-500 font-mono font-bold">Total Imóveis</span>
+                     <span className="text-sm text-zinc-500 font-mono font-bold">Total Imóveis</span>
                      <span className="text-sm font-black text-zinc-100">{totalProperties ?? 0}</span>
                   </div>
                </div>

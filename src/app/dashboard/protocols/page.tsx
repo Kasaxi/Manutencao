@@ -44,7 +44,7 @@ export default async function ProtocolsPage() {
          <div className="w-full overflow-x-auto">
             <table className="w-full text-left font-mono text-sm">
                <thead>
-                  <tr className="border-b border-zinc-800 text-zinc-500 text-xs tracking-widest uppercase">
+                  <tr className="border-b border-zinc-800 text-zinc-500 text-sm tracking-widest uppercase">
                      <th className="font-normal py-4 px-4">Título / ID</th>
                      <th className="font-normal py-4 px-4">Imóvel</th>
                      <th className="font-normal py-4 px-4">Gravidade</th>
@@ -56,14 +56,14 @@ export default async function ProtocolsPage() {
                   {orders.map((order) => (
                      <tr key={order.id} className="border-b border-zinc-800/50 hover:bg-[#111113] transition-colors group">
                         <td className="py-4 px-4">
-                           <div className="font-bold text-zinc-100 mb-1">{order.title}</div>
-                           <div className="text-xs text-zinc-600 truncate max-w-xs">{order.id}</div>
+                           <div className="font-bold text-zinc-100 text-base mb-1">{order.title}</div>
+                           <div className="text-[11px] text-zinc-600 truncate max-w-xs">{order.id}</div>
                         </td>
-                        <td className="py-4 px-4 uppercase text-xs text-zinc-400">
+                        <td className="py-4 px-4 uppercase text-sm text-zinc-400">
                            {order.properties?.nickname || 'NÃO_ATRIBUÍDO'}
                         </td>
                         <td className="py-4 px-4">
-                           <span className={`inline-block px-2 py-1 text-[10px] uppercase tracking-wider border ${
+                           <span className={`inline-block px-2.5 py-1 text-xs uppercase tracking-wider border ${
                               order.severity === 'critical' ? 'border-red-900 text-red-500 bg-red-950/30' :
                               order.severity === 'high' ? 'border-orange-900 text-orange-500 bg-orange-950/30' :
                               order.severity === 'medium' ? 'border-amber-900 text-amber-500 bg-amber-950/30' :
@@ -73,14 +73,14 @@ export default async function ProtocolsPage() {
                            </span>
                         </td>
                         <td className="py-4 px-4">
-                           <span className="inline-block px-2 py-1 text-[10px] uppercase tracking-wider border border-zinc-700 text-zinc-400 bg-zinc-900">
+                           <span className="inline-block px-2.5 py-1 text-xs uppercase tracking-wider border border-zinc-700 text-zinc-400 bg-zinc-900">
                               {order.status}
                            </span>
                         </td>
                         <td className="py-4 px-4 text-right">
                            <Link 
                               href={`/dashboard/protocols/${order.id}`}
-                              className="text-xs tracking-widest uppercase text-zinc-500 hover:text-[#FF4500] group-hover:opacity-100 opacity-50 transition-all font-bold"
+                              className="text-sm tracking-widest uppercase text-zinc-500 hover:text-[#FF4500] group-hover:opacity-100 opacity-50 transition-all font-bold"
                            >
                               [ABRIR]
                            </Link>

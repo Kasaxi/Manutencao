@@ -71,11 +71,11 @@ export default function KanbanBoard({ orders: initialOrders }: { orders: Order[]
           return (
             <div key={col.id} className="w-[300px] shrink-0 flex flex-col snap-start">
               <div className="flex items-center justify-between mb-4 px-2">
-                <h2 className="text-xs font-black tracking-[0.2em] text-zinc-500 flex items-center gap-3">
+                <h2 className="text-sm font-black tracking-[0.2em] text-zinc-500 flex items-center gap-3">
                   <span className={`w-2 h-2 ${col.color}`}></span>
                   {col.title}
                 </h2>
-                <span className="text-[10px] font-mono text-zinc-700 font-bold bg-zinc-900 px-2 py-0.5 border border-zinc-800">
+                <span className="text-xs font-mono text-zinc-700 font-bold bg-zinc-900 px-2 py-0.5 border border-zinc-800">
                   {colOrders.length}
                 </span>
               </div>
@@ -110,7 +110,7 @@ export default function KanbanBoard({ orders: initialOrders }: { orders: Order[]
                               </div>
                             )}
 
-                            <div className="text-[9px] font-mono text-zinc-600 mb-2 uppercase tracking-widest flex justify-between">
+                            <div className="text-[11px] font-mono text-zinc-600 mb-2 uppercase tracking-widest flex justify-between">
                               <Link 
                                 href={`/dashboard/protocols/${order.id}`} 
                                 className="hover:text-[#FF4500] transition-colors"
@@ -125,13 +125,13 @@ export default function KanbanBoard({ orders: initialOrders }: { orders: Order[]
                               href={`/dashboard/protocols/${order.id}`}
                               onClick={e => { if (isDragging) e.preventDefault() }}
                             >
-                              <h3 className="text-sm font-bold text-zinc-200 uppercase tracking-tight mb-3 group-hover:text-white">
+                              <h3 className="text-base font-bold text-zinc-200 uppercase tracking-tight mb-3 group-hover:text-white">
                                 {order.title}
                               </h3>
                             </Link>
 
                             <div className="pt-3 border-t border-zinc-800/50 flex items-center justify-between">
-                              <span className="text-[10px] text-zinc-500 uppercase font-black tracking-tighter truncate max-w-[150px]">
+                              <span className="text-xs text-zinc-500 uppercase font-black tracking-tighter truncate max-w-[150px]">
                                 {Array.isArray(order.properties) ? order.properties[0]?.nickname : order.properties?.nickname}
                               </span>
                               <div className="flex items-center gap-1.5 grayscale opacity-30 group-hover:grayscale-0 group-hover:opacity-100 transition-all">
@@ -149,7 +149,7 @@ export default function KanbanBoard({ orders: initialOrders }: { orders: Order[]
 
                     {colOrders.length === 0 && !snapshot.isDraggingOver && (
                       <div className="h-24 border border-zinc-900 border-dashed flex items-center justify-center">
-                        <span className="text-[10px] font-mono text-zinc-800 uppercase tracking-widest">Vazio</span>
+                        <span className="text-xs font-mono text-zinc-800 uppercase tracking-widest">Vazio</span>
                       </div>
                     )}
                   </div>
