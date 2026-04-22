@@ -9,6 +9,17 @@ export default async function ProtocolsPage() {
     .from('service_orders')
     .select('*, properties(nickname)')
     .order('created_at', { ascending: false })
+    
+  const statusLabel: Record<string, string> = {
+    'open': 'Aberto',
+    'analyzing': 'Em Análise',
+    'quote_pending': 'Orçamento',
+    'approved': 'Aprovado',
+    'in_progress': 'Em Execução',
+    'completed': 'Concluído',
+    'validated': 'Validado',
+    'cancelled': 'Cancelado'
+  }
 
   return (
     <div className="flex-1 p-8 md:p-12 h-full flex flex-col relative w-full">
@@ -74,7 +85,7 @@ export default async function ProtocolsPage() {
                         </td>
                         <td className="py-4 px-4">
                            <span className="inline-block px-2.5 py-1 text-xs uppercase tracking-wider border border-zinc-700 text-zinc-400 bg-zinc-900">
-                              {order.status}
+                              {statusLabel[order.status.toLowerCase()] || order.status}
                            </span>
                         </td>
                         <td className="py-4 px-4 text-right">

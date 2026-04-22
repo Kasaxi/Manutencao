@@ -70,7 +70,7 @@ export default async function ProtocolDetailPage({
                      PRIORIDADE: {severityMap[order.severity] || order.severity}
                   </span>
                   <span className="text-xs font-mono text-zinc-500 uppercase tracking-widest px-2 py-0.5 border border-zinc-800 bg-zinc-900">
-                     STATUS: {statusMap[order.status] || order.status}
+                     STATUS: {statusMap[order.status.toLowerCase()] || order.status}
                   </span>
                </div>
                <h1 className="text-3xl md:text-5xl font-black tracking-tighter leading-none text-zinc-100 uppercase opacity-90 truncate">

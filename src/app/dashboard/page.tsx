@@ -172,7 +172,7 @@ export default async function DashboardOverview() {
                                  #{order.code || order.id.slice(0, 8)}
                               </span>
                               <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 border ${statusColor[order.status] || 'text-zinc-500 border-zinc-800'}`}>
-                                 {statusLabel[order.status] || order.status}
+                                 {statusLabel[order.status.toLowerCase()] || order.status}
                               </span>
                            </div>
                            <h3 className="text-base text-zinc-100 font-bold uppercase tracking-tight truncate group-hover:text-white">
@@ -234,7 +234,7 @@ export default async function DashboardOverview() {
                               <div className="text-xs text-zinc-600 font-mono">{prop.city || '—'}</div>
                            </div>
                            <span className="text-xs font-bold uppercase tracking-widest text-zinc-500 px-2.5 py-1 border border-zinc-800 shrink-0">
-                              {(prop.status && propertyStatusLabel[prop.status]) || prop.status || '—'}
+                              {(prop.status && propertyStatusLabel[prop.status.toLowerCase()]) || prop.status || '—'}
                            </span>
                         </Link>
                      ))}

@@ -18,6 +18,17 @@ export default async function ReportsPage() {
     .from('service_orders')
     .select('*, properties(nickname)')
 
+  const statusLabel: Record<string, string> = {
+    'open': 'Aberto',
+    'analyzing': 'Em Análise',
+    'quote_pending': 'Orçamento',
+    'approved': 'Aprovado',
+    'in_progress': 'Em Execução',
+    'completed': 'Concluído',
+    'validated': 'Validado',
+    'cancelled': 'Cancelado'
+  }
+
   // Calculating Metrics
   const totalOrders = orders?.length || 0
   const totalCost = orders?.reduce((acc, order) => acc + (Number(order.actual_total) || 0), 0) || 0
@@ -130,7 +141,7 @@ export default async function ReportsPage() {
               return (
                 <div key={status} className="space-y-1">
                   <div className="flex justify-between text-xs font-mono uppercase tracking-widest">
-                    <span className="text-zinc-400">{status}</span>
+                    <span className="text-zinc-400">{statusLabel[status.toLowerCase()] || status}</span>
                     <span className="text-zinc-100 font-bold">{count} ({percentage.toFixed(0)}%)</span>
                   </div>
                   <div className="h-2 bg-zinc-900 border border-zinc-800">

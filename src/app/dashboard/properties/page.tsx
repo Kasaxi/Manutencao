@@ -65,11 +65,11 @@ export default async function PropertiesPage() {
                         </td>
                         <td className="py-4 px-4">
                            <span className={`inline-block px-2.5 py-1 text-xs uppercase tracking-wider border ${
-                              prop.status === 'rented' ? 'border-emerald-900 text-emerald-500 bg-emerald-950/30' :
-                              prop.status === 'vacant' ? 'border-amber-900 text-amber-500 bg-amber-950/30' :
+                              prop.status?.toLowerCase() === 'rented' ? 'border-emerald-900 text-emerald-500 bg-emerald-950/30' :
+                              prop.status?.toLowerCase() === 'vacant' ? 'border-amber-900 text-amber-500 bg-amber-950/30' :
                               'border-blue-900 text-blue-500 bg-blue-950/30'
                            }`}>
-                              {prop.status === 'rented' ? 'Alugado' : prop.status === 'vacant' ? 'Vago' : 'Uso Próprio'}
+                              {prop.status?.toLowerCase() === 'rented' ? 'Alugado' : prop.status?.toLowerCase() === 'vacant' ? 'Vago' : 'Uso Próprio'}
                            </span>
                         </td>
                         <td className="py-4 px-4 text-right">
