@@ -7,10 +7,8 @@ import {
   BarChart3,
   PieChart,
   ArrowUpRight,
-  Building2,
-  Calendar
+  Building2
 } from 'lucide-react'
-import Link from 'next/link'
 
 export default async function ReportsPage() {
   const supabase = await createClient()

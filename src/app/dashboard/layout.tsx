@@ -1,7 +1,6 @@
-import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
-import { LogOut, LayoutGrid, Building2, Wrench, FileArchive } from 'lucide-react'
+import { LogOut } from 'lucide-react'
 import { Sidebar } from '@/components/Sidebar'
 
 export default async function DashboardLayout({
